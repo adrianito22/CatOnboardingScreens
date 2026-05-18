@@ -119,16 +119,16 @@ struct OptionCard: View {
         } label: {
             HStack(spacing: 14) {
                 ZStack {
-                    RoundedRectangle(cornerRadius: 11, style: .continuous)
+                    RoundedRectangle(cornerRadius: 9, style: .continuous)
                         .fill(selected ? accent : Color.white.opacity(0.06))
-                        .frame(width: 38, height: 38)
+                        .frame(width: 32, height: 32)
                     if selected {
                         Image(systemName: "checkmark")
-                            .font(.system(size: 16, weight: .black))
+                            .font(.system(size: 13, weight: .black))
                             .foregroundStyle(.white)
                     } else {
                         Text(String(UnicodeScalar(65 + index)!))
-                            .font(.custom("Nunito-Black", size: 17))
+                            .font(.custom("Nunito-Black", size: 15))
                             .foregroundStyle(.white)
                     }
                 }

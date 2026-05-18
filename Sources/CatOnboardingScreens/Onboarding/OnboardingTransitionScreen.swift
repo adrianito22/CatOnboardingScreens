@@ -56,19 +56,8 @@ struct OnboardingTransitionScreen: View {
                         .foregroundStyle(Color.white.opacity(0.78))
                         .fixedSize(horizontal: false, vertical: true)
 
-                    // Hero — SF Symbol eye.fill with a soft purple halo behind it
-                    ZStack {
-                        Circle()
-                            .fill(Color.brandPurple.opacity(0.18))
-                            .frame(width: 220, height: 220)
-                            .blur(radius: 40)
-                        Image(systemName: "eye.fill")
-                            .font(.system(size: 96, weight: .bold))
-                            .foregroundStyle(LinearGradient.brand)
-                    }
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 220)
-                    .padding(.top, 8)
+                    CatScannerEyeHero()
+                        .padding(.top, 8)
                 }
                 .padding(.horizontal, 22)
             }
@@ -85,5 +74,135 @@ struct OnboardingTransitionScreen: View {
         }
         .background(Color.brandBg.ignoresSafeArea())
         .onChange(of: lang) { _, _ in onLanguageToggle() }
+    }
+}
+
+// MARK: - Cat scanner eye hero
+//
+// On-brand replacement for the generic `eye.fill` SF Symbol. A stylised cat
+// eye (almond iris + vertical pupil + catch lights) sitting inside expanding
+// scan rings. Pure SwiftUI shapes — no assets, scales perfectly.
+private struct CatScannerEyeHero: View {
+    @State private var pulse: CGFloat = 0
+    @State private var blink: CGFloat = 1   // 1 = open, 0 = closed
+
+    var body: some View {
+        ZStack {
+            bloom
+            scanRings
+            eye
+                .scaleEffect(x: 1, y: blink, anchor: .center)
+                .shadow(color: Color.brandPurple.opacity(0.55), radius: 28, y: 10)
+        }
+        .frame(maxWidth: .infinity)
+        .frame(height: 240)
+        .onAppear {
+            withAnimation(.easeOut(duration: 2.4).repeatForever(autoreverses: false)) {
+                pulse = 1
+            }
+            Task { await runBlinkLoop() }
+        }
+    }
+
+    // Soft purple bloom behind everything.
+    private var bloom: some View {
+        Circle()
+            .fill(
+                RadialGradient(
+                    colors: [Color.brandPurple.opacity(0.32), Color.brandPurple.opacity(0)],
+                    center: .center, startRadius: 10, endRadius: 130
+                )
+            )
+            .frame(width: 260, height: 260)
+            .blur(radius: 28)
+    }
+
+    // Animated scan rings emanating outward.
+    private var scanRings: some View {
+        ZStack {
+            scanRing(index: 0)
+            scanRing(index: 1)
+            scanRing(index: 2)
+        }
+    }
+
+    private func scanRing(index: Int) -> some View {
+        let opacity: Double = 0.28 - Double(index) * 0.07
+        let size: CGFloat = 170 + CGFloat(index) * 36
+        let scale: CGFloat = 1 + pulse * 0.04
+        let alpha: Double = 1 - Double(pulse) * 0.35
+        return Circle()
+            .stroke(Color.brandPurple.opacity(opacity), lineWidth: 1.4)
+            .frame(width: size, height: size)
+            .scaleEffect(scale)
+            .opacity(alpha)
+    }
+
+    // The cat eye composition.
+    private var eye: some View {
+        ZStack {
+            iris
+            pupil
+            catchLights
+            outline
+        }
+    }
+
+    private var iris: some View {
+        ZStack {
+            Ellipse()
+                .fill(
+                    RadialGradient(
+                        colors: [
+                            Color.brandCyan.opacity(0.85),
+                            Color.brandPurple,
+                            Color.brandBlue
+                        ],
+                        center: UnitPoint(x: 0.4, y: 0.45),
+                        startRadius: 4,
+                        endRadius: 80
+                    )
+                )
+            Ellipse()
+                .fill(Color.brandPurple.opacity(0.45))
+                .blur(radius: 18)
+                .blendMode(.plusLighter)
+                .opacity(0.55)
+        }
+        .frame(width: 160, height: 96)
+    }
+
+    private var pupil: some View {
+        Capsule()
+            .fill(Color.black)
+            .frame(width: 18, height: 76)
+    }
+
+    private var catchLights: some View {
+        ZStack {
+            Circle()
+                .fill(Color.white)
+                .frame(width: 12, height: 12)
+                .offset(x: -10, y: -18)
+            Circle()
+                .fill(Color.white.opacity(0.65))
+                .frame(width: 6, height: 6)
+                .offset(x: 13, y: 9)
+        }
+    }
+
+    private var outline: some View {
+        Ellipse()
+            .stroke(Color.white.opacity(0.20), lineWidth: 1.5)
+            .frame(width: 160, height: 96)
+    }
+
+    private func runBlinkLoop() async {
+        while !Task.isCancelled {
+            try? await Task.sleep(nanoseconds: 4_800_000_000)
+            withAnimation(.easeInOut(duration: 0.08)) { blink = 0.1 }
+            try? await Task.sleep(nanoseconds: 130_000_000)
+            withAnimation(.easeInOut(duration: 0.12)) { blink = 1 }
+        }
     }
 }

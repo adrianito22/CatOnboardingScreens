@@ -222,7 +222,8 @@ enum OnboardingContent {
                       hint: "You did something. You know what you did.",
                       weights: [.sass: 4, .coldness: 2]),
             ],
-            accent: .curiosity),
+            accent: .curiosity,
+            customAccent: .brandPurple),
 
         OnboardingQuestion(
             eyebrow: "Scan 2 — The posture",
@@ -242,7 +243,8 @@ enum OnboardingContent {
                       hint: "Holding court from the couch.",
                       weights: [.sass: 4, .manipulation: 2]),
             ],
-            accent: .sass),
+            accent: .sass,
+            customAccent: .brandPurple),
 
         OnboardingQuestion(
             eyebrow: "Scan 3 — Where they look",
@@ -262,7 +264,8 @@ enum OnboardingContent {
                       hint: "The ghost committee is in session.",
                       weights: [.curiosity: 3, .chaos: 3]),
             ],
-            accent: .love),
+            accent: .love,
+            customAccent: .brandPurple),
     ]
 
     private static let es: [OnboardingQuestion] = [
@@ -347,7 +350,8 @@ enum OnboardingContent {
                       hint: "Hiciste algo. Tú sabes qué.",
                       weights: [.sass: 4, .coldness: 2]),
             ],
-            accent: .curiosity),
+            accent: .curiosity,
+            customAccent: .brandPurple),
 
         OnboardingQuestion(
             eyebrow: "Escaneo 2 — La postura",
@@ -367,7 +371,8 @@ enum OnboardingContent {
                       hint: "Dando audiencia desde el sillón.",
                       weights: [.sass: 4, .manipulation: 2]),
             ],
-            accent: .sass),
+            accent: .sass,
+            customAccent: .brandPurple),
 
         OnboardingQuestion(
             eyebrow: "Escaneo 3 — Hacia dónde mira",
@@ -387,7 +392,8 @@ enum OnboardingContent {
                       hint: "El comité fantasma está reunido.",
                       weights: [.curiosity: 3, .chaos: 3]),
             ],
-            accent: .love),
+            accent: .love,
+            customAccent: .brandPurple),
     ]
 }
 

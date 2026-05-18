@@ -110,8 +110,23 @@ struct OnboardingQuestion: Identifiable {
     let title: String
     let subtitle: String
     let options: [OnboardingOption]
-    /// Accent color for this question.
+    /// Accent color for this question (trait-themed for the physical cues).
     let accent: OnboardingTrait
+    /// Optional override for the accent color. Used by the non-scoring
+    /// emotional/affinity questions so their pink/green trait color doesn't
+    /// fight the brand palette — they fall back to brand purple instead.
+    let customAccent: Color?
+
+    init(eyebrow: String, title: String, subtitle: String,
+         options: [OnboardingOption], accent: OnboardingTrait,
+         customAccent: Color? = nil) {
+        self.eyebrow = eyebrow
+        self.title = title
+        self.subtitle = subtitle
+        self.options = options
+        self.accent = accent
+        self.customAccent = customAccent
+    }
 }
 
 // MARK: - Question content (EN + ES)
@@ -144,7 +159,8 @@ enum OnboardingContent {
                       hint: "But you opened this app for a reason.",
                       weights: [:]),
             ],
-            accent: .love),
+            accent: .love,
+            customAccent: .brandPurple),
 
         OnboardingQuestion(
             eyebrow: "Question 2 — You and your cat",
@@ -164,7 +180,8 @@ enum OnboardingContent {
                       hint: "Every day you learn something.",
                       weights: [:]),
             ],
-            accent: .love),
+            accent: .love,
+            customAccent: .brandPurple),
 
         OnboardingQuestion(
             eyebrow: "Question 3 — What you want to know",
@@ -184,7 +201,8 @@ enum OnboardingContent {
                       hint: "Meet your favorite inner villain.",
                       weights: [:]),
             ],
-            accent: .curiosity),
+            accent: .curiosity,
+            customAccent: .brandPurple),
 
         OnboardingQuestion(
             eyebrow: "Scan 1 — The eyes",
@@ -266,7 +284,8 @@ enum OnboardingContent {
                       hint: "Pero por algo abriste esta app.",
                       weights: [:]),
             ],
-            accent: .love),
+            accent: .love,
+            customAccent: .brandPurple),
 
         OnboardingQuestion(
             eyebrow: "Cuestión 2 — Tu gato y tú",
@@ -286,7 +305,8 @@ enum OnboardingContent {
                       hint: "Cada día descubres algo nuevo.",
                       weights: [:]),
             ],
-            accent: .love),
+            accent: .love,
+            customAccent: .brandPurple),
 
         OnboardingQuestion(
             eyebrow: "Cuestión 3 — Lo que quieres saber",
@@ -306,7 +326,8 @@ enum OnboardingContent {
                       hint: "Conoce a tu villano interior favorito.",
                       weights: [:]),
             ],
-            accent: .curiosity),
+            accent: .curiosity,
+            customAccent: .brandPurple),
 
         OnboardingQuestion(
             eyebrow: "Escaneo 1 — Los ojos",

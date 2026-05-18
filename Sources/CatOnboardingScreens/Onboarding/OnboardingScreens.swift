@@ -114,7 +114,7 @@ struct OnboardingQuestionScreen: View {
         let answered = selected != nil ? 1.0 : 0.4
         return (Double(qIndex) + answered) / Double(qTotal)
     }
-    private var accentColor: Color { question.accent.color }
+    private var accentColor: Color { question.customAccent ?? question.accent.color }
 
     var body: some View {
         VStack(spacing: 0) {

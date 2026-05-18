@@ -126,14 +126,14 @@ struct OnboardingQuestionScreen: View {
                 TopProgressBar(progress: progress, accent: accentColor)
                 HStack {
                     Text(question.eyebrow)
-                        .font(.custom("Nunito-Black", size: 11, relativeTo: .caption))
-                        .tracking(1.4).foregroundStyle(accentColor)
+                        .font(.custom("Nunito-Black", size: 14, relativeTo: .caption))
+                        .tracking(1.2).foregroundStyle(accentColor)
                     Spacer()
                     Text(lang == .es
                          ? "Escaneo \(qIndex + 1) / \(qTotal)"
                          : "Scan \(qIndex + 1) / \(qTotal)")
-                        .font(.custom("Nunito-Black", size: 11, relativeTo: .caption))
-                        .tracking(1.0)
+                        .font(.custom("Nunito-Black", size: 14, relativeTo: .caption))
+                        .tracking(0.8)
                         .foregroundStyle(accentColor.opacity(0.85))
                 }
             }

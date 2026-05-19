@@ -3,8 +3,8 @@
 //
 // Sits between question 3 (the last emotional / "discover" question) and
 // question 4 (the first physical cue). Mirrors the structure of
-// OnboardingBridgeScreen but with a simpler hero — a single eye glyph with
-// a brand-purple halo, no Memory-vs-Photo split. Bilingual (es/en).
+// OnboardingBridgeScreen but with a simpler hero — a mini scanner viewport
+// teasing what the real scan will look like after the paywall.
 
 import SwiftUI
 
@@ -56,7 +56,7 @@ struct OnboardingTransitionScreen: View {
                         .foregroundStyle(Color.white.opacity(0.78))
                         .fixedSize(horizontal: false, vertical: true)
 
-                    CatScannerEyeHero()
+                    MiniScannerHero()
                         .padding(.top, 8)
                 }
                 .padding(.horizontal, 22)
@@ -77,132 +77,137 @@ struct OnboardingTransitionScreen: View {
     }
 }
 
-// MARK: - Cat scanner eye hero
+// MARK: - Mini scanner hero
 //
-// On-brand replacement for the generic `eye.fill` SF Symbol. A stylised cat
-// eye (almond iris + vertical pupil + catch lights) sitting inside expanding
-// scan rings. Pure SwiftUI shapes — no assets, scales perfectly.
-private struct CatScannerEyeHero: View {
-    @State private var pulse: CGFloat = 0
-    @State private var blink: CGFloat = 1   // 1 = open, 0 = closed
+// Teaser for the actual scanner the user will use after the paywall: a
+// viewport with corner brackets, a cat silhouette inside, and a vertical
+// scan line sweeping up and down. The visual language matches
+// OnboardingScannerView's `scannerVisual`, so the transition narratively
+// previews what they're about to experience.
+private struct MiniScannerHero: View {
+    @State private var scanY: CGFloat = 0   // 0 = top, 1 = bottom
+
+    private let viewportSize: CGFloat = 200
 
     var body: some View {
         ZStack {
             bloom
-            scanRings
-            eye
-                .scaleEffect(x: 1, y: blink, anchor: .center)
-                .shadow(color: Color.brandPurpleSoft.opacity(0.55), radius: 28, y: 10)
+            viewport
+                .shadow(color: Color.brandPurpleSoft.opacity(0.45), radius: 22, y: 10)
         }
         .frame(maxWidth: .infinity)
         .frame(height: 240)
         .onAppear {
-            withAnimation(.easeOut(duration: 2.4).repeatForever(autoreverses: false)) {
-                pulse = 1
+            withAnimation(.easeInOut(duration: 2.2).repeatForever(autoreverses: true)) {
+                scanY = 1
             }
-            Task { await runBlinkLoop() }
         }
     }
 
-    // Soft purple bloom behind everything.
+    // Soft purple halo behind the viewport.
     private var bloom: some View {
         Circle()
             .fill(
                 RadialGradient(
-                    colors: [Color.brandPurpleSoft.opacity(0.32), Color.brandPurpleSoft.opacity(0)],
-                    center: .center, startRadius: 10, endRadius: 130
+                    colors: [Color.brandPurpleSoft.opacity(0.28), Color.brandPurpleSoft.opacity(0)],
+                    center: .center, startRadius: 20, endRadius: 130
                 )
             )
             .frame(width: 260, height: 260)
-            .blur(radius: 28)
+            .blur(radius: 24)
     }
 
-    // Animated scan rings emanating outward.
-    private var scanRings: some View {
+    private var viewport: some View {
         ZStack {
-            scanRing(index: 0)
-            scanRing(index: 1)
-            scanRing(index: 2)
+            backdrop
+            catSilhouette
+            scanLine
+            brackets
         }
+        .frame(width: viewportSize, height: viewportSize)
     }
 
-    private func scanRing(index: Int) -> some View {
-        let opacity: Double = 0.28 - Double(index) * 0.07
-        let size: CGFloat = 170 + CGFloat(index) * 36
-        let scale: CGFloat = 1 + pulse * 0.04
-        let alpha: Double = 1 - Double(pulse) * 0.35
-        return Circle()
-            .stroke(Color.brandPurpleSoft.opacity(opacity), lineWidth: 1.4)
-            .frame(width: size, height: size)
-            .scaleEffect(scale)
-            .opacity(alpha)
+    private var backdrop: some View {
+        RoundedRectangle(cornerRadius: 22, style: .continuous)
+            .fill(Color.white.opacity(0.035))
+            .overlay(
+                RoundedRectangle(cornerRadius: 22, style: .continuous)
+                    .stroke(Color.white.opacity(0.06), lineWidth: 1)
+            )
     }
 
-    // The cat eye composition.
-    private var eye: some View {
+    private var catSilhouette: some View {
+        Image(systemName: "cat.fill")
+            .resizable()
+            .scaledToFit()
+            .padding(42)
+            .foregroundStyle(Color.white.opacity(0.55))
+            .frame(width: viewportSize, height: viewportSize)
+    }
+
+    private var scanLine: some View {
+        GeometryReader { geo in
+            let h = geo.size.height
+            VStack(spacing: 0) {
+                // Trail above the bright line
+                Rectangle()
+                    .fill(LinearGradient(
+                        colors: [.clear, Color.brandPurpleSoft.opacity(0.22)],
+                        startPoint: .top, endPoint: .bottom
+                    ))
+                    .frame(height: 32)
+                // The bright line itself
+                Rectangle()
+                    .fill(LinearGradient(
+                        colors: [.clear, Color.brandPurpleSoft, Color.brandPink, .clear],
+                        startPoint: .leading, endPoint: .trailing
+                    ))
+                    .frame(height: 2.5)
+                    .shadow(color: Color.brandPurpleSoft.opacity(0.8), radius: 8)
+            }
+            .offset(y: scanY * (h - 2.5) - 32)
+        }
+        .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+        .frame(width: viewportSize, height: viewportSize)
+    }
+
+    private var brackets: some View {
         ZStack {
-            iris
-            pupil
-            catchLights
-            outline
+            bracket(corner: .topLeading)
+            bracket(corner: .topTrailing)
+            bracket(corner: .bottomLeading)
+            bracket(corner: .bottomTrailing)
         }
+        .frame(width: viewportSize, height: viewportSize)
     }
 
-    private var iris: some View {
-        ZStack {
-            Ellipse()
-                .fill(
-                    RadialGradient(
-                        colors: [
-                            Color.brandCyan.opacity(0.85),
-                            Color.brandPurpleSoft,
-                            Color.brandBlue
-                        ],
-                        center: UnitPoint(x: 0.4, y: 0.45),
-                        startRadius: 4,
-                        endRadius: 80
-                    )
-                )
-            Ellipse()
-                .fill(Color.brandPurpleSoft.opacity(0.45))
-                .blur(radius: 18)
-                .blendMode(.plusLighter)
-                .opacity(0.55)
-        }
-        .frame(width: 160, height: 96)
-    }
+    private enum Corner { case topLeading, topTrailing, bottomLeading, bottomTrailing }
 
-    private var pupil: some View {
-        Capsule()
-            .fill(Color.black)
-            .frame(width: 18, height: 76)
-    }
-
-    private var catchLights: some View {
-        ZStack {
-            Circle()
-                .fill(Color.white)
-                .frame(width: 12, height: 12)
-                .offset(x: -10, y: -18)
-            Circle()
-                .fill(Color.white.opacity(0.65))
-                .frame(width: 6, height: 6)
-                .offset(x: 13, y: 9)
-        }
-    }
-
-    private var outline: some View {
-        Ellipse()
-            .stroke(Color.white.opacity(0.20), lineWidth: 1.5)
-            .frame(width: 160, height: 96)
-    }
-
-    private func runBlinkLoop() async {
-        while !Task.isCancelled {
-            try? await Task.sleep(nanoseconds: 4_800_000_000)
-            withAnimation(.easeInOut(duration: 0.08)) { blink = 0.1 }
-            try? await Task.sleep(nanoseconds: 130_000_000)
-            withAnimation(.easeInOut(duration: 0.12)) { blink = 1 }
+    private func bracket(corner: Corner) -> some View {
+        let armLength: CGFloat = 22
+        let armWidth: CGFloat = 3
+        let edgeInset: CGFloat = 10
+        return ZStack {
+            // Horizontal arm
+            RoundedRectangle(cornerRadius: 1.5, style: .continuous)
+                .fill(Color.brandPurpleSoft)
+                .frame(width: armLength, height: armWidth)
+                .offset(x: corner == .topLeading || corner == .bottomLeading
+                        ? -(viewportSize / 2 - armLength / 2 - edgeInset)
+                        : (viewportSize / 2 - armLength / 2 - edgeInset),
+                        y: corner == .topLeading || corner == .topTrailing
+                        ? -(viewportSize / 2 - armWidth / 2 - edgeInset)
+                        : (viewportSize / 2 - armWidth / 2 - edgeInset))
+            // Vertical arm
+            RoundedRectangle(cornerRadius: 1.5, style: .continuous)
+                .fill(Color.brandPurpleSoft)
+                .frame(width: armWidth, height: armLength)
+                .offset(x: corner == .topLeading || corner == .bottomLeading
+                        ? -(viewportSize / 2 - armWidth / 2 - edgeInset)
+                        : (viewportSize / 2 - armWidth / 2 - edgeInset),
+                        y: corner == .topLeading || corner == .topTrailing
+                        ? -(viewportSize / 2 - armLength / 2 - edgeInset)
+                        : (viewportSize / 2 - armLength / 2 - edgeInset))
         }
     }
 }

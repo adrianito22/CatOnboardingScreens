@@ -45,11 +45,11 @@ struct OnboardingWelcomeScreen: View {
                         )
                         .shadow(color: OnboardingColors.purple.opacity(0.5), radius: 8, y: 3)
                     Text("CatScan")
-                        .font(.custom("Nunito-Black", size: 22))
+                        .font(OnboardingType.title)
                         .tracking(-0.3)
                         .foregroundStyle(.white)
                     Text(lang == .es ? "POR IA" : "AI-POWERED")
-                        .font(.custom("Nunito-Black", size: 10))
+                        .font(OnboardingType.micro)
                         .tracking(1.4)
                         .foregroundStyle(OnboardingColors.cyan)
                         .padding(.horizontal, 8).padding(.vertical, 4)
@@ -62,14 +62,14 @@ struct OnboardingWelcomeScreen: View {
                 VStack(spacing: 10) {
                     Text(lang == .es ? "Descifra la mente oculta de tu gato."
                                      : "Decode the hidden mind of your cat.")
-                        .font(.custom("Nunito-Black", size: 28, relativeTo: .largeTitle))
+                        .font(OnboardingType.display)
                         .multilineTextAlignment(.center)
                         .foregroundStyle(.white)
                         .fixedSize(horizontal: false, vertical: true)
                     Text(lang == .es
                          ? "Un escaneo emocional de 60 segundos. Cinco escenas que ya conoces — tu gato decide el resto."
                          : "A 60-second emotional scan. Five scenes you already know — your cat decides the rest.")
-                        .font(.custom("Nunito-Medium", size: 15, relativeTo: .body))
+                        .font(OnboardingType.subtitle)
                         .multilineTextAlignment(.center)
                         .foregroundStyle(OnboardingColors.text2)
                         .fixedSize(horizontal: false, vertical: true)
@@ -89,7 +89,7 @@ struct OnboardingWelcomeScreen: View {
                 Text(lang == .es
                      ? "Gratis la primera vez. Sin tarjeta."
                      : "Free for first-time scanners. No card needed.")
-                    .font(.custom("Nunito-Bold", size: 11, relativeTo: .caption2))
+                    .font(OnboardingType.micro)
                     .foregroundStyle(OnboardingColors.text3)
                     .multilineTextAlignment(.center)
             }
@@ -126,13 +126,13 @@ struct OnboardingQuestionScreen: View {
                 TopProgressBar(progress: progress, accent: accentColor)
                 HStack {
                     Text(question.eyebrow)
-                        .font(.custom("Nunito-Black", size: 14, relativeTo: .caption))
+                        .font(OnboardingType.eyebrow)
                         .tracking(1.2).foregroundStyle(accentColor)
                     Spacer()
                     Text(lang == .es
                          ? "Escaneo \(qIndex + 1) / \(qTotal)"
                          : "Scan \(qIndex + 1) / \(qTotal)")
-                        .font(.custom("Nunito-Black", size: 14, relativeTo: .caption))
+                        .font(OnboardingType.eyebrow)
                         .tracking(0.8)
                         .foregroundStyle(accentColor.opacity(0.85))
                 }
@@ -143,12 +143,12 @@ struct OnboardingQuestionScreen: View {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 16) {
                     Text(question.title)
-                        .font(.custom("Nunito-Black", size: 26, relativeTo: .title))
+                        .font(OnboardingType.display)
                         .foregroundStyle(.white)
                         .fixedSize(horizontal: false, vertical: true)
                         .padding(.top, 16)
                     Text(question.subtitle)
-                        .font(.custom("Nunito-Medium", size: 16, relativeTo: .body))
+                        .font(OnboardingType.subtitle)
                         .foregroundStyle(OnboardingColors.text2)
                         .fixedSize(horizontal: false, vertical: true)
                     VStack(spacing: 10) {
@@ -212,11 +212,11 @@ struct OnboardingNameSaveScreen: View {
                         Text(dominant.emoji).font(.system(size: 22))
                         VStack(alignment: .leading, spacing: 2) {
                             Text(lang == .es ? "TU GATO ES…" : "YOUR CAT IS…")
-                                .font(.custom("Nunito-Black", size: 9))
+                                .font(OnboardingType.micro)
                                 .tracking(1.4)
                                 .foregroundStyle(OnboardingColors.text3)
                             Text("\u{201C}\(dominant.verdict(lang))\u{201D}")
-                                .font(.custom("Nunito-Black", size: 14))
+                                .font(OnboardingType.eyebrow)
                                 .foregroundStyle(.white)
                                 .lineLimit(2)
                         }
@@ -234,33 +234,33 @@ struct OnboardingNameSaveScreen: View {
                     .padding(.top, 14)
 
                     Text(lang == .es ? "Guarda tu escaneo" : "Save your scan")
-                        .font(.custom("Nunito-Black", size: 11, relativeTo: .caption))
+                        .font(OnboardingType.micro)
                         .tracking(1.6).foregroundStyle(dominant.color)
                         .padding(.top, 4)
 
                     Text(lang == .es ? "Ponle nombre al revoltoso."
                                      : "Name this troublemaker.")
-                        .font(.custom("Nunito-Black", size: 26, relativeTo: .title))
+                        .font(OnboardingType.display)
                         .foregroundStyle(.white)
                         .fixedSize(horizontal: false, vertical: true)
 
                     Text(lang == .es ? "Guardaremos el reporte bajo su nombre."
                                      : "We’ll save the report under their name.")
-                        .font(.custom("Nunito-Medium", size: 15, relativeTo: .body))
+                        .font(OnboardingType.subtitle)
                         .foregroundStyle(OnboardingColors.text2)
                         .fixedSize(horizontal: false, vertical: true)
 
                     // Name (optional)
                     VStack(alignment: .leading, spacing: 6) {
                         Text(lang == .es ? "NOMBRE DEL GATO (OPCIONAL)" : "CAT’S NAME (OPTIONAL)")
-                            .font(.custom("Nunito-Black", size: 11, relativeTo: .caption2))
+                            .font(OnboardingType.micro)
                             .tracking(1.2)
                             .foregroundStyle(OnboardingColors.text3)
                         TextField(
                             lang == .es ? "ej. Michi" : "e.g. Whiskers",
                             text: $name
                         )
-                        .font(.custom("Nunito-Bold", size: 15, relativeTo: .body))
+                        .font(OnboardingType.subtitle)
                         .foregroundStyle(.white)
                         .padding(.horizontal, 14).frame(height: 48)
                         .background(RoundedRectangle(cornerRadius: 14).fill(OnboardingColors.card))
@@ -275,7 +275,7 @@ struct OnboardingNameSaveScreen: View {
                     // Age (4 chips)
                     VStack(alignment: .leading, spacing: 6) {
                         Text(lang == .es ? "EDAD" : "AGE")
-                            .font(.custom("Nunito-Black", size: 11, relativeTo: .caption2))
+                            .font(OnboardingType.micro)
                             .tracking(1.2)
                             .foregroundStyle(OnboardingColors.text3)
                         HStack(spacing: 6) {
@@ -286,7 +286,7 @@ struct OnboardingNameSaveScreen: View {
                                     ageIndex = i
                                 } label: {
                                     Text(label)
-                                        .font(.custom("Nunito-Black", size: 12, relativeTo: .caption))
+                                        .font(OnboardingType.micro)
                                         .foregroundStyle(active ? .white : OnboardingColors.text2)
                                         .frame(maxWidth: .infinity).frame(height: 42)
                                         .background(
@@ -333,18 +333,18 @@ struct OnboardingFeedScreen: View {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 14) {
                     Text(lang == .es ? "Feed de la comunidad" : "Community feed")
-                        .font(.custom("Nunito-Black", size: 11, relativeTo: .caption))
+                        .font(OnboardingType.micro)
                         .tracking(1.6).foregroundStyle(OnboardingColors.pink)
                         .padding(.top, 14)
                     Text(lang == .es
                          ? "Mira a otros gatos siendo igual de descontrolados."
                          : "See other cats being equally unhinged.")
-                        .font(.custom("Nunito-Black", size: 26, relativeTo: .title))
+                        .font(OnboardingType.display)
                         .foregroundStyle(.white)
                     Text(lang == .es
                          ? "Fotos y videos solo de gatos. Comparte tus escaneos, reacciona al caos."
                          : "Photos and videos of cats only. Share your scans, react to the chaos.")
-                        .font(.custom("Nunito-Medium", size: 15, relativeTo: .body))
+                        .font(OnboardingType.subtitle)
                         .foregroundStyle(OnboardingColors.text2)
 
                     OnboardingFeedMosaic()
@@ -387,7 +387,7 @@ struct OnboardingFeedScreen: View {
                     .foregroundStyle(.white)
             }
             Text(label)
-                .font(.custom("Nunito-Bold", size: 14, relativeTo: .footnote))
+                .font(OnboardingType.eyebrow)
                 .foregroundStyle(.white)
                 .fixedSize(horizontal: false, vertical: true)
             Spacer(minLength: 0)

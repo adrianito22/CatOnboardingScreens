@@ -34,19 +34,19 @@ struct OnboardingBridgeScreen: View {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 16) {
                     Text(lang == .es ? "Ahora hazlo de verdad" : "Now do it for real")
-                        .font(.custom("Nunito-Black", size: 11, relativeTo: .caption2))
+                        .font(OnboardingType.micro)
                         .tracking(1.6).foregroundStyle(dominant.color)
                         .padding(.top, 14)
 
                     Text(lang == .es ? "Eso fue un escaneo de memoria." : "That was a scan from memory.")
-                        .font(.custom("Nunito-Black", size: 26, relativeTo: .title))
+                        .font(OnboardingType.display)
                         .foregroundStyle(.white)
                         .fixedSize(horizontal: false, vertical: true)
 
                     Text(lang == .es
                          ? "Hazlo con una foto real — la IA lee los ojos, orejas y postura reales de tu gato, no tu descripción."
                          : "Do it with a real photo — the AI reads your cat’s actual eyes, ears and posture, not your description.")
-                        .font(.custom("Nunito-Medium", size: 15, relativeTo: .body))
+                        .font(OnboardingType.subtitle)
                         .foregroundStyle(OnboardingColors.text2)
                         .fixedSize(horizontal: false, vertical: true)
 
@@ -85,13 +85,13 @@ struct OnboardingBridgeScreen: View {
     private func bullet(index: Int, text: String, accent: Color) -> some View {
         HStack(spacing: 12) {
             Text("\(index)")
-                .font(.custom("Nunito-Black", size: 11, relativeTo: .caption))
+                .font(OnboardingType.micro)
                 .foregroundStyle(accent)
                 .frame(width: 22, height: 22)
                 .background(RoundedRectangle(cornerRadius: 7).fill(accent.opacity(0.13)))
                 .overlay(RoundedRectangle(cornerRadius: 7).stroke(accent.opacity(0.33), lineWidth: 1))
             Text(text)
-                .font(.custom("Nunito-Bold", size: 14, relativeTo: .footnote))
+                .font(OnboardingType.eyebrow)
                 .foregroundStyle(.white)
                 .fixedSize(horizontal: false, vertical: true)
             Spacer(minLength: 0)

@@ -47,12 +47,12 @@ struct OnboardingTransitionScreen: View {
                         .padding(.top, 14)
 
                     Text(titleText)
-                        .font(.custom("Nunito-Black", size: 26, relativeTo: .title))
+                        .font(OnboardingType.display)
                         .foregroundStyle(.white)
                         .fixedSize(horizontal: false, vertical: true)
 
                     Text(subtitleText)
-                        .font(.custom("Nunito-Medium", size: 15, relativeTo: .body))
+                        .font(OnboardingType.subtitle)
                         .foregroundStyle(Color.white.opacity(0.78))
                         .fixedSize(horizontal: false, vertical: true)
 

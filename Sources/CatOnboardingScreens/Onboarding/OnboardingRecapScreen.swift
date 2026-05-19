@@ -63,7 +63,7 @@ struct OnboardingRecapScreen: View {
                         .padding(.top, 14)
 
                         Text(lang == .es ? "Esto es lo que vimos" : "Here's what we saw")
-                            .font(.custom("Nunito-Black", size: 26, relativeTo: .title))
+                            .font(OnboardingType.display)
                             .foregroundStyle(.white)
                             .fixedSize(horizontal: false, vertical: true)
 
@@ -79,13 +79,13 @@ struct OnboardingRecapScreen: View {
                                         .accessibilityLabel(Text("\(dominantValue) percent"))
 
                                     Text(dominantName)
-                                        .font(.custom("Nunito-Bold", size: 14, relativeTo: .footnote))
+                                        .font(OnboardingType.eyebrow)
                                         .tracking(1.6)
                                         .foregroundStyle(.white)
                                 }
 
                                 Text(result.observation)
-                                    .font(.custom("Nunito-Medium", size: 13, relativeTo: .footnote))
+                                    .font(OnboardingType.hint)
                                     .foregroundStyle(.white.opacity(0.78))
                                     .multilineTextAlignment(.center)
                                     .fixedSize(horizontal: false, vertical: true)
@@ -112,7 +112,7 @@ struct OnboardingRecapScreen: View {
 
                         // Closer — plain text, no card, full width.
                         Text(closerText)
-                            .font(.custom("Nunito-Bold", size: 18, relativeTo: .body))
+                            .font(OnboardingType.subtitle)
                             .foregroundStyle(.white)
                             .fixedSize(horizontal: false, vertical: true)
                             .padding(.top, 4)
@@ -151,7 +151,7 @@ struct OnboardingRecapScreen: View {
             VStack(alignment: .leading, spacing: 6) {
                 Eyebrow(text: eyebrow, size: 10, tracking: 1.4)
                 Text(label)
-                    .font(.custom("Nunito-Medium", size: 15, relativeTo: .body))
+                    .font(OnboardingType.subtitle)
                     .foregroundStyle(.white)
                     .fixedSize(horizontal: false, vertical: true)
             }

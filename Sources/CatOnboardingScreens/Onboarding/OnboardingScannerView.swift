@@ -74,12 +74,12 @@ struct OnboardingScannerView: View {
                 VStack(spacing: 16) {
                     if done {
                         Text(lang == .es ? "ESCANEO DE PRUEBA COMPLETADO" : "DEMO SCAN COMPLETE")
-                            .font(.custom("Nunito-Black", size: 10))
+                            .font(OnboardingType.micro)
                             .tracking(1.8)
                             .foregroundStyle(result.dominant.color)
                             .padding(.top, 14)
                         Text(titleText)
-                            .font(.custom("Nunito-Black", size: 22, relativeTo: .title))
+                            .font(OnboardingType.title)
                             .foregroundStyle(.white)
                             .multilineTextAlignment(.center)
                     }
@@ -89,7 +89,7 @@ struct OnboardingScannerView: View {
 
                     if !done {
                         Text(stages[min(stageIndex, stages.count - 1)] + "…")
-                            .font(.custom("Nunito-Bold", size: 13))
+                            .font(OnboardingType.hint)
                             .foregroundStyle(OnboardingColors.text2)
                             .id(stageIndex)
                             .transition(.opacity)
@@ -167,7 +167,7 @@ struct OnboardingScannerView: View {
             VStack {
                 HStack {
                     Text(lang == .es ? "DE MEMORIA" : "FROM MEMORY")
-                        .font(.custom("Nunito-Black", size: 9))
+                        .font(OnboardingType.micro)
                         .tracking(1.6)
                         .foregroundStyle(.white.opacity(0.92))
                         .padding(.horizontal, 9).padding(.vertical, 5)
@@ -175,7 +175,7 @@ struct OnboardingScannerView: View {
                     Spacer()
                     if done {
                         Text(L("scanner.scanComplete"))
-                            .font(.custom("Nunito-Black", size: 9))
+                            .font(OnboardingType.micro)
                             .tracking(1.4)
                             .foregroundStyle(result.dominant.color)
                             .padding(.horizontal, 9).padding(.vertical, 5)
@@ -229,7 +229,7 @@ struct OnboardingScannerView: View {
                 }
                 Spacer()
                 Text("\(animatedValues[i])%")
-                    .font(.custom("Nunito-Black", size: 28))
+                    .font(OnboardingType.display)
                     .foregroundStyle(color)
                     .shadow(color: color.opacity(0.6), radius: 8)
                     .contentTransition(.numericText())

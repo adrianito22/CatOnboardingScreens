@@ -93,7 +93,7 @@ struct GhostPill: View {
             action()
         } label: {
             Text(title)
-                .font(.custom("Nunito-Bold", size: 13, relativeTo: .footnote))
+                .font(OnboardingType.hint)
                 .foregroundStyle(.white.opacity(0.85))
                 .padding(.horizontal, 14).frame(height: 34)
                 .background(Color.white.opacity(0.06))
@@ -134,12 +134,12 @@ struct OptionCard: View {
                 }
                 VStack(alignment: .leading, spacing: 5) {
                     Text(label)
-                        .font(.custom("Nunito-Black", size: 18, relativeTo: .body))
+                        .font(OnboardingType.optionLabel)
                         .foregroundStyle(.white)
                         .multilineTextAlignment(.leading)
                         .fixedSize(horizontal: false, vertical: true)
                     Text(hint)
-                        .font(.custom("Nunito-Medium", size: 15, relativeTo: .footnote))
+                        .font(OnboardingType.hint)
                         .foregroundStyle(OnboardingColors.text3)
                         .multilineTextAlignment(.leading)
                         .fixedSize(horizontal: false, vertical: true)
@@ -182,7 +182,7 @@ struct OnboardingTopBar: View {
                     Text("/").opacity(0.3)
                     Text("ES").opacity(lang == .es ? 1 : 0.4)
                 }
-                .font(.custom("Nunito-Black", size: 11, relativeTo: .caption2))
+                .font(OnboardingType.micro)
                 .tracking(1.2)
                 .foregroundStyle(.white)
                 .padding(.horizontal, 11).frame(height: 30)

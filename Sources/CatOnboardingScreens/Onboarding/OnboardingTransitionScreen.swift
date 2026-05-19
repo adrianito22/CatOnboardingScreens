@@ -43,7 +43,7 @@ struct OnboardingTransitionScreen: View {
 
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 16) {
-                    Eyebrow(text: eyebrowText, color: .brandPurple)
+                    Eyebrow(text: eyebrowText, color: .brandPurpleSoft)
                         .padding(.top, 14)
 
                     Text(titleText)
@@ -92,7 +92,7 @@ private struct CatScannerEyeHero: View {
             scanRings
             eye
                 .scaleEffect(x: 1, y: blink, anchor: .center)
-                .shadow(color: Color.brandPurple.opacity(0.55), radius: 28, y: 10)
+                .shadow(color: Color.brandPurpleSoft.opacity(0.55), radius: 28, y: 10)
         }
         .frame(maxWidth: .infinity)
         .frame(height: 240)
@@ -109,7 +109,7 @@ private struct CatScannerEyeHero: View {
         Circle()
             .fill(
                 RadialGradient(
-                    colors: [Color.brandPurple.opacity(0.32), Color.brandPurple.opacity(0)],
+                    colors: [Color.brandPurpleSoft.opacity(0.32), Color.brandPurpleSoft.opacity(0)],
                     center: .center, startRadius: 10, endRadius: 130
                 )
             )
@@ -132,7 +132,7 @@ private struct CatScannerEyeHero: View {
         let scale: CGFloat = 1 + pulse * 0.04
         let alpha: Double = 1 - Double(pulse) * 0.35
         return Circle()
-            .stroke(Color.brandPurple.opacity(opacity), lineWidth: 1.4)
+            .stroke(Color.brandPurpleSoft.opacity(opacity), lineWidth: 1.4)
             .frame(width: size, height: size)
             .scaleEffect(scale)
             .opacity(alpha)
@@ -155,7 +155,7 @@ private struct CatScannerEyeHero: View {
                     RadialGradient(
                         colors: [
                             Color.brandCyan.opacity(0.85),
-                            Color.brandPurple,
+                            Color.brandPurpleSoft,
                             Color.brandBlue
                         ],
                         center: UnitPoint(x: 0.4, y: 0.45),
@@ -164,7 +164,7 @@ private struct CatScannerEyeHero: View {
                     )
                 )
             Ellipse()
-                .fill(Color.brandPurple.opacity(0.45))
+                .fill(Color.brandPurpleSoft.opacity(0.45))
                 .blur(radius: 18)
                 .blendMode(.plusLighter)
                 .opacity(0.55)

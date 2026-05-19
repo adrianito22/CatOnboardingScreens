@@ -13,6 +13,10 @@ extension Color {
 
     // MARK: - Brand Colors
     static let brandPurple    = Color(hex: 0x6B47FF)
+    /// Softer lavender purple — same hue family as `brandPurple` but pushed
+    /// lighter so it doesn't fight large fills like progress bars or selected
+    /// option tiles. Used as the unified onboarding accent.
+    static let brandPurpleSoft = Color(hex: 0x9483FF)
     static let brandBlue      = Color(hex: 0x2473FF)
     static let brandCyan      = Color(hex: 0x61D1FF)
     static let brandPink      = Color(hex: 0xFF5FA0)
@@ -106,8 +110,9 @@ extension LinearGradient {
 // Mirrors every Color token defined above. No new color values are introduced.
 extension ShapeStyle where Self == Color {
     // Brand
-    static var brandPurple:   Color { Color.brandPurple }
-    static var brandBlue:     Color { Color.brandBlue }
+    static var brandPurple:     Color { Color.brandPurple }
+    static var brandPurpleSoft: Color { Color.brandPurpleSoft }
+    static var brandBlue:       Color { Color.brandBlue }
     static var brandCyan:     Color { Color.brandCyan }
     static var brandPink:     Color { Color.brandPink }
     static var brandBg:       Color { Color.brandBg }

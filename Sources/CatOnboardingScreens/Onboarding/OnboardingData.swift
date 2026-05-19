@@ -160,7 +160,7 @@ enum OnboardingContent {
                       weights: [:]),
             ],
             accent: .love,
-            customAccent: .brandPurple),
+            customAccent: .brandPurpleSoft),
 
         OnboardingQuestion(
             eyebrow: "Question 2 — You and your cat",
@@ -181,7 +181,7 @@ enum OnboardingContent {
                       weights: [:]),
             ],
             accent: .love,
-            customAccent: .brandPurple),
+            customAccent: .brandPurpleSoft),
 
         OnboardingQuestion(
             eyebrow: "Question 3 — What you want to know",
@@ -202,7 +202,7 @@ enum OnboardingContent {
                       weights: [:]),
             ],
             accent: .curiosity,
-            customAccent: .brandPurple),
+            customAccent: .brandPurpleSoft),
 
         OnboardingQuestion(
             eyebrow: "Scan 1 — The eyes",
@@ -223,7 +223,7 @@ enum OnboardingContent {
                       weights: [.sass: 4, .coldness: 2]),
             ],
             accent: .curiosity,
-            customAccent: .brandPurple),
+            customAccent: .brandPurpleSoft),
 
         OnboardingQuestion(
             eyebrow: "Scan 2 — The posture",
@@ -244,7 +244,7 @@ enum OnboardingContent {
                       weights: [.sass: 4, .manipulation: 2]),
             ],
             accent: .sass,
-            customAccent: .brandPurple),
+            customAccent: .brandPurpleSoft),
 
         OnboardingQuestion(
             eyebrow: "Scan 3 — Where they look",
@@ -265,7 +265,7 @@ enum OnboardingContent {
                       weights: [.curiosity: 3, .chaos: 3]),
             ],
             accent: .love,
-            customAccent: .brandPurple),
+            customAccent: .brandPurpleSoft),
     ]
 
     private static let es: [OnboardingQuestion] = [
@@ -288,7 +288,7 @@ enum OnboardingContent {
                       weights: [:]),
             ],
             accent: .love,
-            customAccent: .brandPurple),
+            customAccent: .brandPurpleSoft),
 
         OnboardingQuestion(
             eyebrow: "Cuestión 2 — Tu gato y tú",
@@ -309,7 +309,7 @@ enum OnboardingContent {
                       weights: [:]),
             ],
             accent: .love,
-            customAccent: .brandPurple),
+            customAccent: .brandPurpleSoft),
 
         OnboardingQuestion(
             eyebrow: "Cuestión 3 — Lo que quieres saber",
@@ -330,7 +330,7 @@ enum OnboardingContent {
                       weights: [:]),
             ],
             accent: .curiosity,
-            customAccent: .brandPurple),
+            customAccent: .brandPurpleSoft),
 
         OnboardingQuestion(
             eyebrow: "Escaneo 1 — Los ojos",
@@ -351,7 +351,7 @@ enum OnboardingContent {
                       weights: [.sass: 4, .coldness: 2]),
             ],
             accent: .curiosity,
-            customAccent: .brandPurple),
+            customAccent: .brandPurpleSoft),
 
         OnboardingQuestion(
             eyebrow: "Escaneo 2 — La postura",
@@ -372,7 +372,7 @@ enum OnboardingContent {
                       weights: [.sass: 4, .manipulation: 2]),
             ],
             accent: .sass,
-            customAccent: .brandPurple),
+            customAccent: .brandPurpleSoft),
 
         OnboardingQuestion(
             eyebrow: "Escaneo 3 — Hacia dónde mira",
@@ -393,7 +393,7 @@ enum OnboardingContent {
                       weights: [.curiosity: 3, .chaos: 3]),
             ],
             accent: .love,
-            customAccent: .brandPurple),
+            customAccent: .brandPurpleSoft),
     ]
 }
 

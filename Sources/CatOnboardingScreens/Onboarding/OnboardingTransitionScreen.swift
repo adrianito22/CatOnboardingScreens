@@ -49,32 +49,37 @@ struct OnboardingTransitionScreen: View {
                 .padding(.horizontal, 22)
                 .padding(.top, 8)
 
-            ScrollView(showsIndicators: false) {
-                VStack(alignment: .leading, spacing: 16) {
-                    Eyebrow(text: eyebrowText, color: .brandPurpleSoft)
-                        .padding(.top, 14)
+            // Title block at the top — short enough that it never needs scrolling.
+            VStack(alignment: .leading, spacing: 12) {
+                Eyebrow(text: eyebrowText, color: .brandPurpleSoft)
 
-                    Text(titleText)
-                        .font(OnboardingType.display)
-                        .foregroundStyle(.white)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .contentTransition(.opacity)
-                        .id(titleText)
+                Text(titleText)
+                    .font(OnboardingType.display)
+                    .foregroundStyle(.white)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .contentTransition(.opacity)
+                    .id(titleText)
 
-                    Text(subtitleText)
-                        .font(OnboardingType.subtitle)
-                        .foregroundStyle(Color.white.opacity(0.78))
-                        .fixedSize(horizontal: false, vertical: true)
-                        .contentTransition(.opacity)
-                        .id(subtitleText)
-
-                    SleepyCatHero(isAwake: $isAwake)
-                        .padding(.top, 8)
-                }
-                .padding(.horizontal, 22)
+                Text(subtitleText)
+                    .font(OnboardingType.subtitle)
+                    .foregroundStyle(Color.white.opacity(0.78))
+                    .fixedSize(horizontal: false, vertical: true)
+                    .contentTransition(.opacity)
+                    .id(subtitleText)
             }
+            .padding(.horizontal, 22)
+            .padding(.top, 14)
 
-            Spacer(minLength: 0)
+            // Flexible space pushes the cat down toward the CTA. Two Spacers
+            // with different priorities keep the cat closer to the bottom
+            // half while still leaving a comfortable gap above the button.
+            Spacer(minLength: 24)
+
+            SleepyCatHero(isAwake: $isAwake)
+                .frame(maxWidth: .infinity)
+
+            Spacer(minLength: 12)
+                .frame(maxHeight: 36)
 
             PrimaryGradientButton(
                 title: ctaText,

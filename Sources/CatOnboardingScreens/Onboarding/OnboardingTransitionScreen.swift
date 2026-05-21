@@ -49,13 +49,15 @@ struct OnboardingTransitionScreen: View {
                 .padding(.horizontal, 22)
                 .padding(.top, 8)
 
-            // Title block at the top — short enough that it never needs scrolling.
+            // Title block at the top — left-aligned, full width so it never
+            // collapses to its content and drifts to centre.
             VStack(alignment: .leading, spacing: 12) {
                 Eyebrow(text: eyebrowText, color: .brandPurpleSoft)
 
                 Text(titleText)
                     .font(OnboardingType.display)
                     .foregroundStyle(.white)
+                    .multilineTextAlignment(.leading)
                     .fixedSize(horizontal: false, vertical: true)
                     .contentTransition(.opacity)
                     .id(titleText)
@@ -63,23 +65,23 @@ struct OnboardingTransitionScreen: View {
                 Text(subtitleText)
                     .font(OnboardingType.subtitle)
                     .foregroundStyle(Color.white.opacity(0.78))
+                    .multilineTextAlignment(.leading)
                     .fixedSize(horizontal: false, vertical: true)
                     .contentTransition(.opacity)
                     .id(subtitleText)
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, 22)
             .padding(.top, 14)
 
-            // Flexible space pushes the cat down toward the CTA. Two Spacers
-            // with different priorities keep the cat closer to the bottom
-            // half while still leaving a comfortable gap above the button.
-            Spacer(minLength: 24)
+            // Equal flexible spacers above and below center the cat in the
+            // remaining space between the title block and the CTA.
+            Spacer(minLength: 16)
 
             SleepyCatHero(isAwake: $isAwake)
                 .frame(maxWidth: .infinity)
 
-            Spacer(minLength: 12)
-                .frame(maxHeight: 36)
+            Spacer(minLength: 16)
 
             PrimaryGradientButton(
                 title: ctaText,

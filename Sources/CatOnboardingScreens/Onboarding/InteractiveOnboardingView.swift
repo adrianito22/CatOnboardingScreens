@@ -88,8 +88,7 @@ struct InteractiveOnboardingView: View {
                 case .welcome:
                     OnboardingWelcomeScreen(
                         lang: $lang,
-                        onStart: { step = .question(0) },
-                        onSkip:  skipFromWelcome
+                        onStart: { step = .question(0) }
                     )
                 case .transition:
                     OnboardingTransitionScreen(lang: $lang) {
@@ -101,8 +100,7 @@ struct InteractiveOnboardingView: View {
                         question: questions[i],
                         qIndex: i, qTotal: questions.count,
                         selected: Binding(get: { answers[i] }, set: { answers[i] = $0 }),
-                        onNext: { advanceFromQuestion(i) },
-                        onSkip: skipFromQuestions
+                        onNext: { advanceFromQuestion(i) }
                     )
                 case .scanner:
                     OnboardingScannerView(
@@ -132,11 +130,7 @@ struct InteractiveOnboardingView: View {
                 case .feed:
                     OnboardingFeedScreen(
                         lang: $lang,
-                        onContinue: { step = .recap },
-                        onSkip:     {
-                            OnboardingAnalytics.skipped(at: .feed, lang: lang)
-                            step = .bridge
-                        }
+                        onContinue: { step = .recap }
                     )
                 case .recap:
                     OnboardingRecapScreen(
@@ -185,20 +179,6 @@ struct InteractiveOnboardingView: View {
         case 5:    commit(); step = .scanner
         default:   step = .scanner  // safety
         }
-    }
-
-    private func skipFromQuestions() {
-        OnboardingAnalytics.skipped(at: .question, lang: lang)
-        answers = OnboardingScoring.fillUnansweredRandomly(answers, questions: questions)
-        commit(); step = .scanner
-    }
-
-    private func skipFromWelcome() {
-        OnboardingAnalytics.skipped(at: .welcome, lang: lang)
-        answers = OnboardingScoring.fillUnansweredRandomly(
-            Array(repeating: Int?.none, count: questions.count),
-            questions: questions)
-        commit(); step = .scanner
     }
 
     private func commit() {

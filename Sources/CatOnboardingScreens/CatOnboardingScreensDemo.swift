@@ -123,8 +123,7 @@ private struct ScreenWrapper: View {
         case .welcome:
             OnboardingWelcomeScreen(
                 lang: $lang,
-                onStart: { dismiss() },
-                onSkip:  { dismiss() }
+                onStart: { dismiss() }
             )
 
         case .questionEmotion:
@@ -134,8 +133,7 @@ private struct ScreenWrapper: View {
                 question: qs[1],                // emotional Q
                 qIndex: 1, qTotal: qs.count,
                 selected: $fakeAnswer,
-                onNext: { dismiss() },
-                onSkip: { dismiss() }
+                onNext: { dismiss() }
             )
 
         case .questionPhysical:
@@ -145,8 +143,7 @@ private struct ScreenWrapper: View {
                 question: qs[3],                // first physical (eyes)
                 qIndex: 3, qTotal: qs.count,
                 selected: $fakeAnswer,
-                onNext: { dismiss() },
-                onSkip: { dismiss() }
+                onNext: { dismiss() }
             )
 
         case .transition:
@@ -173,8 +170,7 @@ private struct ScreenWrapper: View {
         case .feed:
             OnboardingFeedScreen(
                 lang: $lang,
-                onContinue: dismiss,
-                onSkip:     dismiss
+                onContinue: dismiss
             )
 
         case .recap:

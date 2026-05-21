@@ -45,7 +45,7 @@ struct OnboardingTransitionScreen: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            OnboardingTopBar(lang: $lang, showSkip: false)
+            OnboardingTopBar(lang: $lang)
                 .padding(.horizontal, 22)
                 .padding(.top, 8)
 

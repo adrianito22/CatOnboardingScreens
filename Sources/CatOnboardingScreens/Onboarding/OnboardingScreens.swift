@@ -20,13 +20,10 @@ import UIKit
 struct OnboardingWelcomeScreen: View {
     @Binding var lang: OnboardingLang
     var onStart: () -> Void
-    var onSkip:  () -> Void
 
     var body: some View {
         VStack(spacing: 0) {
-            OnboardingTopBar(lang: $lang, showSkip: true,
-                             skipTitle: lang == .es ? "Saltar" : "Skip",
-                             onSkip: onSkip)
+            OnboardingTopBar(lang: $lang)
                 .padding(.horizontal, 22).padding(.top, 8)
 
             Spacer(minLength: 4)
@@ -108,7 +105,6 @@ struct OnboardingQuestionScreen: View {
     let qTotal: Int
     @Binding var selected: Int?
     var onNext: () -> Void
-    var onSkip: () -> Void
 
     private var progress: Double {
         let answered = selected != nil ? 1.0 : 0.4
@@ -120,9 +116,7 @@ struct OnboardingQuestionScreen: View {
         VStack(spacing: 0) {
             // ── Header
             VStack(spacing: 10) {
-                OnboardingTopBar(lang: $lang, showSkip: true,
-                                 skipTitle: lang == .es ? "Saltar" : "Skip",
-                                 onSkip: onSkip)
+                OnboardingTopBar(lang: $lang)
                 TopProgressBar(progress: progress, accent: accentColor)
                 HStack {
                     Text(question.eyebrow)
@@ -321,13 +315,10 @@ struct OnboardingNameSaveScreen: View {
 struct OnboardingFeedScreen: View {
     @Binding var lang: OnboardingLang
     var onContinue: () -> Void
-    var onSkip:     () -> Void
 
     var body: some View {
         VStack(spacing: 0) {
-            OnboardingTopBar(lang: $lang, showSkip: true,
-                             skipTitle: lang == .es ? "Más tarde" : "Maybe later",
-                             onSkip: onSkip)
+            OnboardingTopBar(lang: $lang)
                 .padding(.horizontal, 22).padding(.top, 8)
 
             ScrollView(showsIndicators: false) {

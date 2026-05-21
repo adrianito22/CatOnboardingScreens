@@ -163,15 +163,17 @@ struct OptionCard: View {
     }
 }
 
-/// Top bar (language toggle + optional skip). Skip is whitelisted per screen.
+/// Top bar — language toggle, right-aligned. There is intentionally no skip
+/// button: the onboarding requires the user to engage with every step (each
+/// question's Continue button only enables once an answer is selected), so
+/// there's no way to bypass the funnel.
 struct OnboardingTopBar: View {
     @Binding var lang: OnboardingLang
-    var showSkip: Bool = false
-    var skipTitle: String = ""
-    var onSkip: () -> Void = {}
 
     var body: some View {
         HStack {
+            Spacer()
+
             Button {
                 OnboardingHaptics.languageToggled.fire()
                 lang = (lang == .en) ? .es : .en
@@ -190,10 +192,6 @@ struct OnboardingTopBar: View {
                 .overlay(Capsule().stroke(Color.white.opacity(0.10), lineWidth: 1))
             }
             .buttonStyle(.plain)
-
-            Spacer()
-
-            if showSkip { GhostPill(title: skipTitle, action: onSkip) }
         }
     }
 }

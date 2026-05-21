@@ -33,19 +33,19 @@ struct OnboardingBridgeScreen: View {
 
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 16) {
-                    Text(lang == .es ? "Ahora hazlo de verdad" : "Now do it for real")
+                    Text(lang == .es ? "Ahora con una foto suya" : "Now with their photo")
                         .font(OnboardingType.micro)
                         .tracking(1.6).foregroundStyle(dominant.color)
                         .padding(.top, 14)
 
-                    Text(lang == .es ? "Eso fue un escaneo de memoria." : "That was a scan from memory.")
+                    Text(lang == .es ? "Eso fue de memoria." : "That was from memory.")
                         .font(OnboardingType.display)
                         .foregroundStyle(.white)
                         .fixedSize(horizontal: false, vertical: true)
 
                     Text(lang == .es
-                         ? "Hazlo con una foto real — la IA lee los ojos, orejas y postura reales de tu gato, no tu descripción."
-                         : "Do it with a real photo — the AI reads your cat’s actual eyes, ears and posture, not your description.")
+                         ? "Súbele una foto y la IA observa los ojos, orejas y postura de tu gato — no tu descripción."
+                         : "Add a photo and the AI looks at your cat’s eyes, ears and posture — not your description.")
                         .font(OnboardingType.subtitle)
                         .foregroundStyle(OnboardingColors.text2)
                         .fixedSize(horizontal: false, vertical: true)
@@ -57,8 +57,8 @@ struct OnboardingBridgeScreen: View {
 
                     VStack(spacing: 8) {
                         bullet(index: 1, text: lang == .es
-                               ? "Hasta 3× más nítido con fotos reales"
-                               : "Up to 3× sharper readings on real photos",
+                               ? "Lecturas más detalladas con una foto"
+                               : "More detailed readings from a photo",
                                accent: dominant.color)
                         bullet(index: 2, text: lang == .es
                                ? "Dilatación pupilar, ángulo de orejas, postura y mirada"
@@ -72,7 +72,7 @@ struct OnboardingBridgeScreen: View {
             }
 
             PrimaryGradientButton(
-                title: lang == .es ? "Probar un escaneo real" : "Try a real scan",
+                title: lang == .es ? "Escanear con una foto" : "Scan with a photo",
                 systemImage: "camera.fill",
                 haptic: .bridgeLaunch,
                 action: onContinue

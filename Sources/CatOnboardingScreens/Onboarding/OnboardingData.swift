@@ -186,7 +186,7 @@ enum OnboardingContent {
         OnboardingQuestion(
             eyebrow: "Question 3 — What you want to know",
             title: "What would you love to discover about them?",
-            subtitle: "The scanner pulls exactly this out.",
+            subtitle: "This is what the AI picks up on.",
             options: [
                 .init(label: "How much they actually love me",
                       hint: "Spoiler: probably more than you think.",
@@ -207,7 +207,7 @@ enum OnboardingContent {
         OnboardingQuestion(
             eyebrow: "Scan 1 — The eyes",
             title: "Look at your cat right now. Their eyes are…",
-            subtitle: "This is the first thing the scanner reads.",
+            subtitle: "It's the first thing the AI looks at.",
             options: [
                 .init(label: "Huge — pupils like black holes",
                       hint: "Something is about to be destroyed.",
@@ -314,7 +314,7 @@ enum OnboardingContent {
         OnboardingQuestion(
             eyebrow: "Cuestión 3 — Lo que quieres saber",
             title: "¿Qué te gustaría descubrir de él?",
-            subtitle: "El escáner saca exactamente esto.",
+            subtitle: "Justo esto es lo que la IA interpreta.",
             options: [
                 .init(label: "Cuánto me quiere realmente",
                       hint: "Spoiler: probablemente más de lo que crees.",
@@ -335,7 +335,7 @@ enum OnboardingContent {
         OnboardingQuestion(
             eyebrow: "Escaneo 1 — Los ojos",
             title: "Mira a tu gato ahora mismo. Sus ojos están…",
-            subtitle: "Es lo primero que lee el escáner.",
+            subtitle: "Es lo primero que observa la IA.",
             options: [
                 .init(label: "Enormes — pupilas como agujeros negros",
                       hint: "Algo está a punto de ser destruido.",

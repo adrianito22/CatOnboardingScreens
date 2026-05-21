@@ -42,8 +42,8 @@ struct OnboardingRecapScreen: View {
 
     private var closerText: String {
         lang == .es
-            ? "Te falta entender el otro \(missing)%. Eso lo hace el scanner real."
-            : "You're missing the other \(missing)%. That's what the real scanner reveals."
+            ? "Te falta el otro \(missing)%. Súbele una foto y la IA lee el resto."
+            : "You're missing the other \(missing)%. Add a photo and the AI reads the rest."
     }
 
     var body: some View {

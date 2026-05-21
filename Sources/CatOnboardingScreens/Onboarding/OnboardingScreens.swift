@@ -84,8 +84,8 @@ struct OnboardingWelcomeScreen: View {
                     action: onStart
                 )
                 Text(lang == .es
-                     ? "Gratis la primera vez. Sin tarjeta."
-                     : "Free for first-time scanners. No card needed.")
+                     ? "Empieza en menos de un minuto."
+                     : "Get started in under a minute.")
                     .font(OnboardingType.micro)
                     .foregroundStyle(OnboardingColors.text3)
                     .multilineTextAlignment(.center)

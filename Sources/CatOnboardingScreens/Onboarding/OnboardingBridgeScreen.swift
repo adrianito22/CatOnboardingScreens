@@ -11,20 +11,7 @@ import SwiftUI
 struct OnboardingBridgeScreen: View {
     @Binding var lang: OnboardingLang
     let dominant: OnboardingTrait
-    /// Number of free scans the user gets after the paywall. Defaults to the
-    /// app-wide constant — pass a different value (e.g. `profileStore.remainingScans`)
-    /// if the entitlement changes per-user.
-    var freeScans: Int = AppConstants.Limits.freeTierScans
     var onContinue: () -> Void
-
-    private var freeScansBulletText: String {
-        let isPlural = freeScans != 1
-        if lang == .es {
-            return "\(freeScans) \(isPlural ? "escaneos gratis" : "escaneo gratis") para probarlo"
-        } else {
-            return "\(freeScans) \(isPlural ? "free scans" : "free scan") to try it out"
-        }
-    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -63,8 +50,6 @@ struct OnboardingBridgeScreen: View {
                         bullet(index: 2, text: lang == .es
                                ? "Dilatación pupilar, ángulo de orejas, postura y mirada"
                                : "Eye dilation, ear angle, posture and gaze",
-                               accent: dominant.color)
-                        bullet(index: 3, text: freeScansBulletText,
                                accent: dominant.color)
                     }
                 }

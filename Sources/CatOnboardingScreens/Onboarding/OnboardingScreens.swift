@@ -84,8 +84,8 @@ struct OnboardingWelcomeScreen: View {
                     action: onStart
                 )
                 Text(lang == .es
-                     ? "Empieza en menos de un minuto."
-                     : "Get started in under a minute.")
+                     ? "Responder las preguntas no te toma más de 2 minutos."
+                     : "Answering the questions takes no more than 2 minutes.")
                     .font(OnboardingType.micro)
                     .foregroundStyle(OnboardingColors.text3)
                     .multilineTextAlignment(.center)

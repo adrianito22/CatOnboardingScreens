@@ -58,6 +58,8 @@ struct OnboardingAuroraBackground: View {
             PawMotif()
         }
         .ignoresSafeArea()
+        // Purely decorative — must never intercept taps (e.g. the EN/ES toggle).
+        .allowsHitTesting(false)
     }
 
     /// Soft radial bloom anchored just above the top edge. The 3 variants

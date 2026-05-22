@@ -397,27 +397,19 @@ struct OnboardingFeedScreen: View {
 // renders sane and avoids "ghost" hero/scanner cards in production.
 struct OnboardingCatImage: View {
     var body: some View {
-        #if canImport(UIKit)
         if UIImage(named: "onboarding_cat_scan") != nil {
             Image("onboarding_cat_scan")
                 .resizable()
                 .scaledToFill()
         } else {
-            fallback
-        }
-        #else
-        fallback
-        #endif
-    }
-
-    private var fallback: some View {
-        ZStack {
-            Color.white.opacity(0.04)
-            Image(systemName: "cat.fill")
-                .resizable()
-                .scaledToFit()
-                .padding(36)
-                .foregroundStyle(OnboardingColors.text2)
+            ZStack {
+                Color.white.opacity(0.04)
+                Image(systemName: "cat.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .padding(36)
+                    .foregroundStyle(OnboardingColors.text2)
+            }
         }
     }
 }
@@ -437,6 +429,7 @@ struct OnboardingHeroVisual: View {
 
             OnboardingCatImage()
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                .clipped()   // clip the scaledToFill overflow so its hit-area can't cover the EN/ES toggle above
 
             // bottom fade
             LinearGradient(colors: [.clear, OnboardingColors.bg.opacity(0.55)],

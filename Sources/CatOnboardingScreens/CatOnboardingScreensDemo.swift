@@ -92,7 +92,7 @@ private struct ScreenWrapper: View {
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
-            OnboardingColors.bg.ignoresSafeArea()
+            OnboardingAuroraBackground(glow: .a)
             content
             // Floating close — useful when previewing a screen that doesn't
             // have its own back button.

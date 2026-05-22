@@ -92,7 +92,7 @@ struct OnboardingTransitionScreen: View {
             .padding(.horizontal, 22)
             .padding(.bottom, 24)
         }
-        .background(Color.brandBg.ignoresSafeArea())
+        .background(OnboardingAuroraBackground(glow: .b))
         .onChange(of: lang) { _, _ in onLanguageToggle() }
         .animation(.spring(response: 0.45, dampingFraction: 0.82), value: isAwake)
     }

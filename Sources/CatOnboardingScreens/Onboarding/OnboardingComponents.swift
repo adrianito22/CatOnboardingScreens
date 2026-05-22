@@ -36,7 +36,7 @@ struct TopProgressBar: View {
                     .fill(Color.white.opacity(0.06))
                 Capsule()
                     .fill(
-                        LinearGradient(colors: [accent, accent.opacity(0.75)],
+                        LinearGradient(colors: [accent, Aurora.pink],
                                        startPoint: .leading, endPoint: .trailing)
                     )
                     .shadow(color: accent.opacity(0.55), radius: 8)
@@ -71,13 +71,11 @@ struct PrimaryGradientButton: View {
             .foregroundStyle(.white)
             .frame(maxWidth: .infinity)
             .frame(height: 56)
-            .background(
-                LinearGradient(colors: [OnboardingColors.purple, OnboardingColors.blue],
-                               startPoint: .topLeading, endPoint: .bottomTrailing)
-            )
+            .background(enabled ? AnyShapeStyle(Aurora.primary) : AnyShapeStyle(Color.white.opacity(0.06)))
             .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
-            .shadow(color: OnboardingColors.purple.opacity(enabled ? 0.45 : 0), radius: 14, y: 8)
-            .opacity(enabled ? 1 : 0.4)
+            .shadow(color: enabled ? Aurora.ctaShadow : .clear, radius: 16, y: 8)
+            .shadow(color: enabled ? Aurora.ctaShadow2 : .clear, radius: 9, y: 4)
+            .opacity(enabled ? 1 : 0.5)
         }
         .buttonStyle(.plain)
         .disabled(!enabled)
@@ -119,18 +117,13 @@ struct OptionCard: View {
         } label: {
             HStack(spacing: 14) {
                 ZStack {
-                    RoundedRectangle(cornerRadius: 9, style: .continuous)
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
                         .fill(selected ? accent : Color.white.opacity(0.06))
                         .frame(width: 32, height: 32)
-                    if selected {
-                        Image(systemName: "checkmark")
-                            .font(.system(size: 13, weight: .black))
-                            .foregroundStyle(.white)
-                    } else {
-                        Text(String(UnicodeScalar(65 + index)!))
-                            .font(.custom("Nunito-Black", size: 15))
-                            .foregroundStyle(.white)
-                    }
+                        .shadow(color: selected ? accent.opacity(0.5) : .clear, radius: 8, y: 2)
+                    Text(String(UnicodeScalar(65 + index)!))
+                        .font(.custom("Nunito-Black", size: 15))
+                        .foregroundStyle(selected ? Color(red: 0x1a/255, green: 0x0d/255, blue: 0x2e/255) : .white)
                 }
                 VStack(alignment: .leading, spacing: 5) {
                     Text(label)
@@ -140,20 +133,36 @@ struct OptionCard: View {
                         .fixedSize(horizontal: false, vertical: true)
                     Text(hint)
                         .font(OnboardingType.hint)
-                        .foregroundStyle(OnboardingColors.text3)
+                        .foregroundStyle(selected ? OnboardingColors.text2 : OnboardingColors.text3)
                         .multilineTextAlignment(.leading)
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 Spacer(minLength: 0)
+                if selected {
+                    ZStack {
+                        Circle().fill(accent)
+                        Image(systemName: "checkmark")
+                            .font(.system(size: 11, weight: .black))
+                            .foregroundStyle(Color(red: 0x1a/255, green: 0x0d/255, blue: 0x2e/255))
+                    }
+                    .frame(width: 22, height: 22)
+                    .overlay(Circle().stroke(accent.opacity(0.25), lineWidth: 4))
+                }
             }
             .padding(.horizontal, 16).padding(.vertical, 14)
             .background(
                 RoundedRectangle(cornerRadius: 16, style: .continuous)
-                    .fill(selected ? accent.opacity(0.13) : OnboardingColors.card)
+                    .fill(
+                        selected
+                        ? AnyShapeStyle(LinearGradient(
+                            colors: [accent.opacity(0.18), Aurora.pink.opacity(0.12)],
+                            startPoint: .topLeading, endPoint: .bottomTrailing))
+                        : AnyShapeStyle(OnboardingColors.card)
+                    )
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 16, style: .continuous)
-                    .stroke(selected ? accent : OnboardingColors.border, lineWidth: 1)
+                    .stroke(selected ? accent : OnboardingColors.border, lineWidth: 1.5)
             )
             .shadow(color: selected ? accent.opacity(0.30) : .clear, radius: 16, y: 8)
             .scaleEffect(selected ? 1.01 : 1.0)

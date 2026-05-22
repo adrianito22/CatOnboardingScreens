@@ -48,7 +48,7 @@ struct OnboardingRecapScreen: View {
 
     var body: some View {
         ZStack {
-            Color.brandBg.ignoresSafeArea()
+            OnboardingAuroraBackground(glow: .c)
 
             VStack(spacing: 0) {
                 OnboardingTopBar(lang: $lang)

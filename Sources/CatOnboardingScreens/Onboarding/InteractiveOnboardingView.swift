@@ -79,9 +79,18 @@ struct InteractiveOnboardingView: View {
             questions: questions, answers: answers, lang: lang)
     }
 
+    /// Halo hue rotates across the flow to keep visual rhythm (Aurora design).
+    private var auroraGlow: OnboardingAuroraBackground.Glow {
+        switch step {
+        case .welcome, .question, .feed:        return .a   // purple
+        case .transition, .nameSave, .bridge:   return .b   // pink
+        case .scanner, .recap:                  return .c   // cyan
+        }
+    }
+
     var body: some View {
         ZStack {
-            OnboardingColors.bg.ignoresSafeArea()
+            OnboardingAuroraBackground(glow: auroraGlow)
 
             Group {
                 switch step {

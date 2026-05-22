@@ -23,60 +23,71 @@ struct OnboardingWelcomeScreen: View {
 
     var body: some View {
         VStack(spacing: 0) {
+            // Pinned top bar — must never be pushed off-screen by tall content,
+            // otherwise its EN/ES toggle stops receiving taps.
             OnboardingTopBar(lang: $lang)
                 .padding(.horizontal, 22).padding(.top, 8)
 
-            Spacer(minLength: 4)
+            // Scrollable middle: centers when it fits, scrolls when it doesn't.
+            GeometryReader { geo in
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: 0) {
+                        Spacer(minLength: 16)
 
-            VStack(spacing: 18) {
-                // Brand chip — fills the top area & gives an anchor
-                HStack(spacing: 10) {
-                    Image(systemName: "pawprint.fill")
-                        .font(.system(size: 15, weight: .black))
-                        .foregroundStyle(.white)
-                        .frame(width: 30, height: 30)
-                        .background(
-                            LinearGradient(colors: [OnboardingColors.purple, OnboardingColors.blue],
-                                           startPoint: .topLeading, endPoint: .bottomTrailing),
-                            in: RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        )
-                        .shadow(color: OnboardingColors.purple.opacity(0.5), radius: 8, y: 3)
-                    Text("CatScan")
-                        .font(OnboardingType.title)
-                        .tracking(-0.3)
-                        .foregroundStyle(.white)
-                    Text(lang == .es ? "POR IA" : "AI-POWERED")
-                        .font(OnboardingType.micro)
-                        .tracking(1.4)
-                        .foregroundStyle(OnboardingColors.cyan)
-                        .padding(.horizontal, 8).padding(.vertical, 4)
-                        .background(OnboardingColors.cyan.opacity(0.15), in: Capsule())
-                        .overlay(Capsule().stroke(OnboardingColors.cyan.opacity(0.3), lineWidth: 1))
+                        VStack(spacing: 18) {
+                            // Brand chip — fills the top area & gives an anchor
+                            HStack(spacing: 10) {
+                                Image(systemName: "pawprint.fill")
+                                    .font(.system(size: 15, weight: .black))
+                                    .foregroundStyle(.white)
+                                    .frame(width: 30, height: 30)
+                                    .background(
+                                        LinearGradient(colors: [OnboardingColors.purple, OnboardingColors.blue],
+                                                       startPoint: .topLeading, endPoint: .bottomTrailing),
+                                        in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                    )
+                                    .shadow(color: OnboardingColors.purple.opacity(0.5), radius: 8, y: 3)
+                                Text("CatScan")
+                                    .font(OnboardingType.title)
+                                    .tracking(-0.3)
+                                    .foregroundStyle(.white)
+                                Text(lang == .es ? "POR IA" : "AI-POWERED")
+                                    .font(OnboardingType.micro)
+                                    .tracking(1.4)
+                                    .foregroundStyle(OnboardingColors.cyan)
+                                    .padding(.horizontal, 8).padding(.vertical, 4)
+                                    .background(OnboardingColors.cyan.opacity(0.15), in: Capsule())
+                                    .overlay(Capsule().stroke(OnboardingColors.cyan.opacity(0.3), lineWidth: 1))
+                            }
+
+                            OnboardingHeroVisual(height: 260)
+
+                            VStack(spacing: 10) {
+                                Text(lang == .es ? "Descifra la mente oculta de tu gato."
+                                                 : "Decode the hidden mind of your cat.")
+                                    .font(OnboardingType.display)
+                                    .multilineTextAlignment(.center)
+                                    .foregroundStyle(.white)
+                                    .fixedSize(horizontal: false, vertical: true)
+                                Text(lang == .es
+                                     ? "Un escaneo emocional de 60 segundos. Cinco escenas que ya conoces — tu gato decide el resto."
+                                     : "A 60-second emotional scan. Five scenes you already know — your cat decides the rest.")
+                                    .font(OnboardingType.subtitle)
+                                    .multilineTextAlignment(.center)
+                                    .foregroundStyle(OnboardingColors.text2)
+                                    .fixedSize(horizontal: false, vertical: true)
+                            }
+                            .padding(.horizontal, 6)
+                        }
+                        .padding(.horizontal, 22)
+
+                        Spacer(minLength: 16)
+                    }
+                    .frame(minHeight: geo.size.height)
                 }
-
-                OnboardingHeroVisual(height: 260)
-
-                VStack(spacing: 10) {
-                    Text(lang == .es ? "Descifra la mente oculta de tu gato."
-                                     : "Decode the hidden mind of your cat.")
-                        .font(OnboardingType.display)
-                        .multilineTextAlignment(.center)
-                        .foregroundStyle(.white)
-                        .fixedSize(horizontal: false, vertical: true)
-                    Text(lang == .es
-                         ? "Un escaneo emocional de 60 segundos. Cinco escenas que ya conoces — tu gato decide el resto."
-                         : "A 60-second emotional scan. Five scenes you already know — your cat decides the rest.")
-                        .font(OnboardingType.subtitle)
-                        .multilineTextAlignment(.center)
-                        .foregroundStyle(OnboardingColors.text2)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-                .padding(.horizontal, 6)
             }
-            .padding(.horizontal, 22)
 
-            Spacer(minLength: 12)
-
+            // Pinned footer
             VStack(spacing: 10) {
                 PrimaryGradientButton(
                     title: lang == .es ? "Comenzar" : "Get started",
@@ -92,6 +103,7 @@ struct OnboardingWelcomeScreen: View {
             }
             .padding(.horizontal, 22)
             .padding(.bottom, 22)
+            .padding(.top, 8)
         }
     }
 }

@@ -139,7 +139,7 @@ struct InteractiveOnboardingView: View {
                 case .feed:
                     OnboardingFeedScreen(
                         lang: $lang,
-                        onContinue: { step = .transition }
+                        onContinue: { step = .recap }
                     )
                 case .recap:
                     OnboardingRecapScreen(
@@ -183,7 +183,7 @@ struct InteractiveOnboardingView: View {
     private func advanceFromQuestion(_ i: Int) {
         switch i {
         case 0, 1: step = .question(i + 1)
-        case 2:    step = .feed          // community feed teaser, then the cat game
+        case 2:    step = .transition    // last emotional Q → cat game → physical Qs
         case 3, 4: step = .question(i + 1)
         case 5:    commit(); step = .scanner
         default:   step = .scanner  // safety
@@ -214,7 +214,7 @@ struct InteractiveOnboardingView: View {
             dominant: r.dominant.rawValue,
             lang: lang
         )
-        step = .recap
+        step = .feed   // feed teaser now lands after the scan, where "share your scans" makes sense
     }
 
     /// Fires bridge_cta + completed (with duration + user property) and hands

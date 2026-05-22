@@ -79,7 +79,7 @@ struct OnboardingWelcomeScreen: View {
 
             VStack(spacing: 10) {
                 PrimaryGradientButton(
-                    title: lang == .es ? "Iniciar el escaneo" : "Start the scan",
+                    title: lang == .es ? "Comenzar" : "Get started",
                     systemImage: "arrow.right",
                     action: onStart
                 )

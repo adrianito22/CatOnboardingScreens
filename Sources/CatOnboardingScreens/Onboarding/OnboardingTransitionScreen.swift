@@ -85,6 +85,7 @@ struct OnboardingTransitionScreen: View {
 
             PrimaryGradientButton(
                 title: ctaText,
+                enabled: isAwake,
                 haptic: .primaryTapped,
                 action: onContinue
             )

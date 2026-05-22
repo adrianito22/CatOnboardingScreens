@@ -137,12 +137,17 @@ struct OnboardingScannerView: View {
             RoundedRectangle(cornerRadius: 22, style: .continuous)
                 .fill(Color.white.opacity(0.03))
 
-            OnboardingCatImage()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .clipped()
-                .brightness(done ? 0 : -0.18)
-                .saturation(done ? 1.0 : 0.4)
-                .animation(.easeInOut(duration: 0.4), value: done)
+            // Pin the illustration to the card's exact bounds and clip it,
+            // so a tall portrait asset can't overflow and cover the text
+            // above/below. (Scanner screen only.)
+            GeometryReader { geo in
+                OnboardingCatImage()
+                    .frame(width: geo.size.width, height: geo.size.height)
+                    .clipped()
+                    .brightness(done ? 0 : -0.18)
+                    .saturation(done ? 1.0 : 0.4)
+                    .animation(.easeInOut(duration: 0.4), value: done)
+            }
 
             cornerBrackets
 

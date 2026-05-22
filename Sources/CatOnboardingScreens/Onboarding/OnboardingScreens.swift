@@ -396,12 +396,16 @@ struct OnboardingFeedScreen: View {
 // to an SF Symbol instead of an invisible 0×0 view. Keeps `#Preview`
 // renders sane and avoids "ghost" hero/scanner cards in production.
 struct OnboardingCatImage: View {
+    /// `.fill` crops to fill the frame (good for wide hero cards);
+    /// `.fit` shows the whole mascot centered (good for the scan viewfinder).
+    var contentMode: ContentMode = .fill
+
     var body: some View {
         #if canImport(UIKit)
         if UIImage(named: "onboarding_cat_scan") != nil {
             Image("onboarding_cat_scan")
                 .resizable()
-                .scaledToFill()
+                .aspectRatio(contentMode: contentMode)
         } else {
             fallback
         }

@@ -137,9 +137,9 @@ struct OnboardingScannerView: View {
             RoundedRectangle(cornerRadius: 22, style: .continuous)
                 .fill(Color.white.opacity(0.03))
 
-            OnboardingCatImage()
+            OnboardingCatImage(contentMode: .fit)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .clipped()
+                .padding(.vertical, 10)
                 .brightness(done ? 0 : -0.18)
                 .saturation(done ? 1.0 : 0.4)
                 .animation(.easeInOut(duration: 0.4), value: done)

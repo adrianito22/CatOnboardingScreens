@@ -490,15 +490,27 @@ struct OnboardingFeedMosaic: View {
         let icon: String
         let count: String
         let big: Bool
+        /// Real cat photo asset for this tile. Falls back to the paw
+        /// placeholder when the asset isn't in the bundle yet.
+        let asset: String
     }
     private let specs: [TileSpec] = [
-        .init(trait: .love,         icon: "heart.fill",    count: "128",  big: false),
-        .init(trait: .curiosity,    icon: "play.fill",     count: "0:12", big: true),
-        .init(trait: .sass,         icon: "message.fill",  count: "56",   big: false),
-        .init(trait: .chaos,        icon: "eye.fill",      count: "312",  big: false),
-        .init(trait: .manipulation, icon: "flame.fill",    count: "21",   big: false),
-        .init(trait: .coldness,     icon: "bookmark.fill", count: "87",   big: false),
+        .init(trait: .love,         icon: "heart.fill",    count: "128",  big: false, asset: "feed_love"),
+        .init(trait: .curiosity,    icon: "play.fill",     count: "0:12", big: true,  asset: "feed_curiosity"),
+        .init(trait: .sass,         icon: "message.fill",  count: "56",   big: false, asset: "feed_sass"),
+        .init(trait: .chaos,        icon: "eye.fill",      count: "312",  big: false, asset: "feed_chaos"),
+        .init(trait: .manipulation, icon: "flame.fill",    count: "21",   big: false, asset: "feed_manipulation"),
+        .init(trait: .coldness,     icon: "bookmark.fill", count: "87",   big: false, asset: "feed_coldness"),
     ]
+
+    /// Whether a real photo asset exists for this tile yet.
+    private func hasAsset(_ name: String) -> Bool {
+        #if canImport(UIKit)
+        return UIImage(named: name) != nil
+        #else
+        return false
+        #endif
+    }
 
     var body: some View {
         GeometryReader { geo in
@@ -521,13 +533,28 @@ struct OnboardingFeedMosaic: View {
     @ViewBuilder
     private func tile(_ spec: TileSpec, width: CGFloat, height: CGFloat) -> some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 12, style: .continuous)
-                .fill(LinearGradient(colors: [spec.trait.color.opacity(0.45),
-                                              spec.trait.color.opacity(0.12)],
-                                     startPoint: .topLeading, endPoint: .bottomTrailing))
-            Image(systemName: "pawprint.fill")
-                .font(.system(size: spec.big ? 26 : 18, weight: .regular))
-                .foregroundStyle(.white.opacity(0.85))
+            if hasAsset(spec.asset) {
+                // Real cat photo, filling the tile, with a bottom scrim so the
+                // engagement count stays legible.
+                Image(spec.asset)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: width, height: height)
+                    .clipped()
+                    .overlay(
+                        LinearGradient(colors: [.clear, .black.opacity(0.45)],
+                                       startPoint: .center, endPoint: .bottom)
+                    )
+            } else {
+                // Placeholder: trait-colored gradient + paw glyph.
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .fill(LinearGradient(colors: [spec.trait.color.opacity(0.45),
+                                                  spec.trait.color.opacity(0.12)],
+                                         startPoint: .topLeading, endPoint: .bottomTrailing))
+                Image(systemName: "pawprint.fill")
+                    .font(.system(size: spec.big ? 26 : 18, weight: .regular))
+                    .foregroundStyle(.white.opacity(0.85))
+            }
             VStack {
                 Spacer()
                 HStack {
@@ -537,7 +564,8 @@ struct OnboardingFeedMosaic: View {
                         .font(.custom("Nunito-Black", size: 8))
                     Spacer()
                 }
-                .foregroundStyle(.white.opacity(0.9))
+                .foregroundStyle(.white.opacity(0.95))
+                .shadow(color: .black.opacity(0.5), radius: 2, y: 1)
                 .padding(6)
             }
         }

@@ -493,10 +493,13 @@ struct OnboardingFeedMosaic: View {
         /// Real cat photo asset for this tile. Falls back to the paw
         /// placeholder when the asset isn't in the bundle yet.
         let asset: String
+        /// Optional looping video Data Set — when present and resolvable it
+        /// plays in place of the photo (the Curiosity tile is a video post).
+        var videoAsset: String? = nil
     }
     private let specs: [TileSpec] = [
         .init(trait: .love,         icon: "heart.fill",    count: "128",  big: false, asset: "feed_love"),
-        .init(trait: .curiosity,    icon: "play.fill",     count: "0:12", big: true,  asset: "feed_curiosity"),
+        .init(trait: .curiosity,    icon: "play.fill",     count: "0:12", big: true,  asset: "feed_curiosity", videoAsset: "feed_curiosity_video"),
         .init(trait: .sass,         icon: "message.fill",  count: "56",   big: false, asset: "feed_sass"),
         .init(trait: .chaos,        icon: "eye.fill",      count: "312",  big: false, asset: "feed_chaos"),
         .init(trait: .manipulation, icon: "flame.fill",    count: "21",   big: false, asset: "feed_manipulation"),
@@ -530,10 +533,18 @@ struct OnboardingFeedMosaic: View {
         }
     }
 
+    /// Resolves a tile's looping video URL, if it has one bundled.
+    private func videoURL(_ spec: TileSpec) -> URL? {
+        guard let v = spec.videoAsset else { return nil }
+        return OnboardingFeedVideo.url(asset: v)
+    }
+
     @ViewBuilder
     private func tile(_ spec: TileSpec, width: CGFloat, height: CGFloat) -> some View {
         ZStack {
-            if hasAsset(spec.asset) {
+            if let vURL = videoURL(spec) {
+                videoLayer(url: vURL, width: width, height: height)
+            } else if hasAsset(spec.asset) {
                 // Real cat photo, filling the tile, with a bottom scrim so the
                 // engagement count stays legible.
                 Image(spec.asset)
@@ -573,5 +584,20 @@ struct OnboardingFeedMosaic: View {
         .overlay(RoundedRectangle(cornerRadius: 12, style: .continuous)
             .stroke(.white.opacity(0.1), lineWidth: 1))
         .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+    }
+
+    @ViewBuilder
+    private func videoLayer(url: URL, width: CGFloat, height: CGFloat) -> some View {
+        #if canImport(UIKit)
+        LoopingVideoTile(url: url)
+            .frame(width: width, height: height)
+            .clipped()
+            .overlay(
+                LinearGradient(colors: [.clear, .black.opacity(0.45)],
+                               startPoint: .center, endPoint: .bottom)
+            )
+        #else
+        Color.clear
+        #endif
     }
 }
